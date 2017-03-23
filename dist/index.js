@@ -3,6 +3,8 @@
 // Port of lower_bound from http://en.cppreference.com/w/cpp/algorithm/lower_bound
 // Used to compute insertion index to keep queue sorted after insertion
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36,7 +38,7 @@ var PriorityQueue = function () {
 	_createClass(PriorityQueue, [{
 		key: 'enqueue',
 		value: function enqueue(run, opts) {
-			opts = Object.assign({
+			opts = _extends({
 				priority: 0
 			}, opts);
 
@@ -71,7 +73,7 @@ var PQueue = function () {
 	function PQueue(opts) {
 		_classCallCheck(this, PQueue);
 
-		opts = Object.assign({
+		opts = _extends({
 			concurrency: Infinity,
 			queueClass: PriorityQueue
 		}, opts);
@@ -151,3 +153,4 @@ var PQueue = function () {
 }();
 
 module.exports = PQueue;
+
