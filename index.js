@@ -59,9 +59,12 @@ class PQueue {
 			throw new TypeError('Expected `concurrency` to be a number from 1 and up');
 		}
 
+
+
 		this.queue = new opts.queueClass(); // eslint-disable-line new-cap
 		this._pendingCount = 0;
 		this._concurrency = opts.concurrency;
+		this._promise = opts.promise || Promise;
 		this._resolveEmpty = () => {};
 	}
 	_next() {
@@ -74,7 +77,7 @@ class PQueue {
 		}
 	}
 	add(fn, opts) {
-		return new Promise((resolve, reject) => {
+		return new this._promise((resolve, reject) => {
 			const run = () => {
 				this._pendingCount++;
 
@@ -98,7 +101,7 @@ class PQueue {
 		});
 	}
 	onEmpty() {
-		return new Promise(resolve => {
+		return new this._promise(resolve => {
 			const existingResolve = this._resolveEmpty;
 			this._resolveEmpty = () => {
 				existingResolve();

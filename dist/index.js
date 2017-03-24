@@ -85,6 +85,7 @@ var PQueue = function () {
 		this.queue = new opts.queueClass(); // eslint-disable-line new-cap
 		this._pendingCount = 0;
 		this._concurrency = opts.concurrency;
+		this._promise = opts.promise || Promise;
 		this._resolveEmpty = function () {};
 	}
 
@@ -104,7 +105,7 @@ var PQueue = function () {
 		value: function add(fn, opts) {
 			var _this = this;
 
-			return new Promise(function (resolve, reject) {
+			return new this._promise(function (resolve, reject) {
 				var run = function run() {
 					_this._pendingCount++;
 
@@ -129,7 +130,7 @@ var PQueue = function () {
 		value: function onEmpty() {
 			var _this2 = this;
 
-			return new Promise(function (resolve) {
+			return new this._promise(function (resolve) {
 				var existingResolve = _this2._resolveEmpty;
 				_this2._resolveEmpty = function () {
 					existingResolve();
